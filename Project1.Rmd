@@ -1,0 +1,118 @@
+---
+title: "Project 1"
+date: "2024-09-26"
+output: 
+  html_document:
+    toc: true
+    theme: united
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+
+```
+
+## Introduction
+
+My data set is the pride index data set. It includes US college and university LGBTQ+ pride index ratings (1 - 5 scale for LGBTQ-inclusive policies, programs and practices), along with number of students enrolled, surrounding community size, and characteristics of the campus.
+
+My outcome variable of interest is the pride index rating and the predictors are the community, numbers of students, and the college type. You can get more information about this [here](https://campusprideindex.org)!
+
+```{r question 1}
+Project1_PrideIndex <- read.csv('Project1_PrideIndex.csv')
+prideindex <- Project1_PrideIndex
+library(ggplot2)
+
+```
+
+![](images/MicrosoftTeams-image%20(1).png.jpeg)
+
+<https://www.bentley.edu/news/bentley-earns-high-marks-national-list-inclusive-lgbtq-campuses>
+
+## Univariate Distribution of Outcome Variable
+
+```{r distribution}
+prideindex_ggplot <- ggplot(prideindex)
+prideindex_ggplot + 
+  geom_histogram(aes(x = rating), binwidth = 0.1, fill = "gold", color = "black") + 
+  labs(
+    title = 'Distribution of Pride Index',
+    x = 'Pride Index',
+    y = 'Frequency'
+  )
+
+summary(prideindex$rating)
+
+```
+
+The mean of the Pride rating around the different campuses is around 3.983 and the median Pride rating is 4. Both the mean and median are in the higher ratings out of 5, proving that most campuses in the US have LGBTQ supporting policies and programs.
+
+## Bivariate Distribution Analyses
+
+```{r bivariate distributions}
+
+prideindex_ggplot <- ggplot(prideindex)
+prideindex_ggplot + 
+  geom_boxplot(aes(x = rating, y = community), 
+               color = "black",  
+               fill = "lightblue"  
+  ) + 
+  labs(
+    title = 'Distribution of Pride Index in the Communities',
+    x = 'Pride Index',
+    y = 'Community'
+  )
+
+
+
+
+prideindex_ggplot <- ggplot(prideindex)
+prideindex_ggplot + 
+  geom_point(aes(x = rating, y= students)) + 
+  labs(
+    title = 'Distribution of Pride Index by Number of Students',
+    x = 'Pride Index',
+    y = '# of students',
+  )
+
+prideindex_ggplot <- ggplot(prideindex)
+prideindex_ggplot + 
+  geom_boxplot(aes(x = rating, y= campus_type)) + 
+  labs(
+    title = 'Distribution of Pride Index by Campus Type',
+    x = 'Pride Index',
+    y = 'Public or Private'
+  )
+```
+
+The multivariate box plot displays three main ideas:
+
+(1) Liberal arts colleges are smaller in regards to student size than those that are not considered liberal arts colleges.
+(2) The size of the range shows that liberal arts colleges have a fairly high Pride Rating, falling between the 4 to 5 range, but there are quite a few colleges that have a 2.5 rating as well.
+(3) Supports the idea presented in the first scatter plot which shows a slightly positive correlation between number of students in a college and their pride rating. As you can see, the higher the range is on the y-axis, the more likely the pride rating is higher.
+
+### Paragraph for elements in Number 4:
+
+I chose 2 working hyperlinks (in the beginning), changing the default font style, size, and/or color of a graph (in the bivariate distribution), a floating table of contents, create one new variable(in the multivariate distribution), and include a multivariate plot that displays the relationship among your outcome variable and at least two of the predictors (right below this).
+
+## Multivariate Distribution Analysis
+
+```{r}
+
+prideindex_ggplot <- ggplot(prideindex)
+prideindex_ggplot + 
+  geom_point(aes(x = rating, y= students, color = liberal_arts)) + 
+  labs(
+    title = 'Distribution of Pride Index, # of Students, and Liberal Arts College Type',
+    x = 'Pride Rating',
+    y = '# of students',
+    color = 'Liberal Arts College'
+  )
+```
+
+The multivariate plot shows that the liberal arts colleges are scattered throughout the pride rating values, with most of them falling between the 3 and 4 range. Additionally the liberal arts colleges are much smaller in student size than the colleges that aren't liberal arts.
+
+## Conclusion
+
+With a mean Pride rating of 3.983 and a median of 4 out of 5, the Pride ratings across U.S. colleges shows that most universities have good LGBTQ+ support networks. This indicates that LGBTQ-friendly policies have been adopted by the colleges. Even though some of their sizes are smaller than those of non-liberal arts universities, liberal arts colleges have high Pride scores, usually between 4 and 5, but some have lower ratings, about 2.5. The relationship between student numbers and Pride ratings makes sense, showing that larger universities might provide more resources for LGBTQ+ support. Liberal arts colleges are dispersed across Pride ratings, but they typically are grouped between 3 and 4, according to the multivariate plot. In general, liberal arts colleges exhibit a similar level of dedication despite their smaller size.
